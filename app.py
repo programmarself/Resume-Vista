@@ -92,64 +92,23 @@ resume_data = {
 }
 
 # Streamlit app layout
-st.title(f"{resume_data['Name']}'s Resume")
+st.markdown("""
+    <style>
+    .title {
+        color: #1E90FF;
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .section-title {
+        color: #4682B4;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .section {
+        margin-bottom: 20px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-# Personal Information
-st.subheader("Personal Information")
-st.write(f"**Date of Birth:** {resume_data['Date of Birth']}")
-st.write(f"**Nationality:** {resume_data['Nationality']}")
-st.write(f"**Gender:** {resume_data['Gender']}")
-st.write(f"**Phone Number:** {resume_data['Phone Number']}")
-st.write(f"**Email:** {resume_data['Email']}")
-st.write(f"**Website:** [Website]({resume_data['Website']})")
-st.write(f"**LinkedIn:** [LinkedIn Profile]({resume_data['LinkedIn']})")
-st.write(f"**WhatsApp Messenger:** {resume_data['WhatsApp Messenger']}")
-st.write(f"**Address:** {resume_data['Address']}")
-st.write(f"**Current Focus:** {resume_data['Current Focus']}")
-
-# Education
-st.subheader("Education")
-for education in resume_data['Education']:
-    st.write(f"**{education['Degree']}**")
-    st.write(f"**Institution:** {education['Institution']}")
-    st.write(f"**Duration:** {education.get('Duration', 'N/A')}")
-    st.write(f"**Website:** [Institution Website]({education.get('Website', '')})")
-    st.write(f"**Location:** {education['Location']}")
-    st.write("---")
-
-# Language Skills
-st.subheader("Language Skills")
-for language, skills in resume_data['Languages'].items():
-    if language == "Mother Tongue":
-        st.write(f"**{language}:** {skills}")
-    else:
-        st.write(f"**{language}:**")
-        for skill, level in skills.items():
-            st.write(f"- **{skill}:** {level}")
-
-# Skills
-st.subheader("Skills")
-st.write(", ".join(resume_data['Skills']))
-
-# Projects
-st.subheader("Projects")
-for project in resume_data['Projects']:
-    st.write(f"**{project['Title']}**")
-    st.write(f"**Domain/Category:** {project['Domain/Category']}")
-    st.write(f"**Description:** {project['Description']}")
-    st.write(f"**Skills:** {', '.join(project['Skills'])}")
-    st.write(f"**Programming Language:** {project['Programming Language']}")
-    st.write(f"**Framework:** {project['Framework']}")
-    st.write("---")
-
-# Certifications
-st.subheader("Certifications")
-for category, certs in resume_data['Certifications'].items():
-    st.write(f"**{category}:**")
-    for cert in certs:
-        st.write(f"- {cert}")
-    st.write("---")
-
-# Hobbies and Interests
-st.subheader("Hobbies and Interests")
-st.write(", ".join(resume_data['Hobbies and Interests']))
+st.markdown(f"<div class='title'>{
