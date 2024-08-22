@@ -1,4 +1,4 @@
-import streamlit as st
+﻿import streamlit as st
 
 # Access secret key from Streamlit secrets
 SECRET_KEY = st.secrets.get("SECRET_KEY", "default-secret-key")
@@ -20,7 +20,7 @@ resume_data = {
         {
             "Degree": "BS (Computer Science)",
             "Institution": "Virtual University of Pakistan",
-            "Duration": "01/01/2019 � 01/08/2024",
+            "Duration": "01/01/2019 – 01/08/2024",
             "Website": "https://www.vu.edu.pk/",
             "Location": "Peshawar, Pakistan"
         },
