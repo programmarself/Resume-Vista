@@ -1,88 +1,58 @@
 import streamlit as st
-from PIL import Image
-import os  # For environment variable access
 
-# Define resume data
+# Secret Key for secure handling (dummy key used here, replace with your actual key)
+SECRET_KEY = st.secrets["SECRET_KEY"]  # Load secret key from Streamlit secrets
+
+# Sample resume data
 resume_data = {
-    "name": "Your Name",
-    "title": "Your Title (e.g., Software Engineer)",
-    "email": "your_email@example.com",
-    "phone": "Your Phone Number",
-    "linkedin": "https://www.linkedin.com/in/your_linkedin_profile",
-    "github": "https://github.com/your_github_username",
-    "skills": ["Python", "Machine Learning", "Data Science", "Deep Learning"],
-    "projects": [
+    "Name": "John Doe",
+    "Email": "john.doe@example.com",
+    "Phone": "+1234567890",
+    "LinkedIn": "linkedin.com/in/johndoe",
+    "Summary": "Experienced software developer with a passion for building scalable applications.",
+    "Skills": ["Python", "Streamlit", "Data Analysis", "Machine Learning"],
+    "Experience": [
         {
-            "title": "Project 1",
-            "description": "Brief description of Project 1",
-            "link": "https://github.com/your_repo/project1"
+            "Company": "Tech Inc.",
+            "Position": "Software Engineer",
+            "Duration": "Jan 2020 - Present",
+            "Responsibilities": [
+                "Developed web applications using Streamlit.",
+                "Collaborated with cross-functional teams.",
+                "Optimized data processing pipelines."
+            ]
         },
-        # Add more projects as needed
-    ],
-    "experience": [
         {
-            "company": "Company Name",
-            "position": "Your Position",
-            "start_date": "Month Year",
-            "end_date": "Month Year (or Present)",
-            "description": "Your experience at the company"
-        },
-        # Add more experience as needed
-    ],
-    "education": [
-        {
-            "degree": "Your Degree",
-            "field": "Your Field of Study",
-            "university": "University Name",
-            "graduation_date": "Month Year"
-        },
-        # Add more education as needed
+            "Company": "Web Solutions",
+            "Position": "Junior Developer",
+            "Duration": "Jun 2018 - Dec 2019",
+            "Responsibilities": [
+                "Worked on frontend development.",
+                "Assisted in backend API integrations.",
+                "Performed unit testing and debugging."
+            ]
+        }
     ]
 }
 
-def create_resume():
-    st.title("Your Name")
-    st.subheader(resume_data["title"])
+# Streamlit app layout
+st.title(f"{resume_data['Name']}'s Resume")
+st.subheader("Contact Information")
+st.write(f"**Email:** {resume_data['Email']}")
+st.write(f"**Phone:** {resume_data['Phone']}")
+st.write(f"**LinkedIn:** [LinkedIn Profile]({resume_data['LinkedIn']})")
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.write("**Contact Information:**")
-        st.write(f"Email: {resume_data['email']}")
-        st.write(f"Phone: {resume_data['phone']}")
-        st.write(f"LinkedIn: {resume_data['linkedin']}")
-        st.write(f"GitHub: {resume_data['github']}")
+st.subheader("Summary")
+st.write(resume_data['Summary'])
 
-    with col2:
-        st.write("**Skills:**")
-        for skill in resume_data["skills"]:
-            st.write(f"- {skill}")
+st.subheader("Skills")
+st.write(", ".join(resume_data['Skills']))
 
-    st.write("**Projects:**")
-    for project in resume_data["projects"]:
-        st.write(f"**{project['title']}**")
-        st.write(project["description"])
-        st.write(f"[Link]({project['link']})")
-
-    st.write("**Experience:**")
-    for exp in resume_data["experience"]:
-        st.write(f"**{exp['company']}** - **{exp['position']}**")
-        st.write(f"{exp['start_date']} - {exp['end_date']}")
-        st.write(exp["description"])
-
-    st.write("**Education:**")
-    for edu in resume_data["education"]:
-        st.write(f"**{edu['degree']}** in **{edu['field']}** from **{edu['university']}**")
-        st.write(f"Graduated: {edu['graduation_date']}")
-
-# Access API key using environment variable or Streamlit secrets (choose one)
-# Option 1: Using environment variable (recommended)
-# api_key = os.environ.get("MY_API_KEY")
-
-# Option 2: Using Streamlit secrets (alternative)
- api_key = st.secrets["my_api_key"]  # Uncomment if using Streamlit secrets
-
-# Use the API key in your Streamlit app (if needed)
-# ... (Your code using the API key)
-
-if __name__ == "__main__":
-    create_resume()
+st.subheader("Experience")
+for job in resume_data['Experience']:
+    st.write(f"**{job['Company']}**")
+    st.write(f"**Position:** {job['Position']}")
+    st.write(f"**Duration:** {job['Duration']}")
+    st.write("**Responsibilities:**")
+    for responsibility in job['Responsibilities']:
+        st.write(f"- {responsibility}")
