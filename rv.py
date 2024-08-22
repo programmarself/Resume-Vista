@@ -7,7 +7,7 @@ from io import BytesIO
 # Load environment variables from .env file
 load_dotenv()
 
-# Access the API key
+# Access the API key (for demonstration purposes)
 API_KEY = os.getenv("API_KEY")
 
 def generate_resume(data):
@@ -41,6 +41,7 @@ def main():
         submit_button = st.form_submit_button("Generate Resume")
 
     if submit_button:
+        # Prepare data for the resume
         resume_data = {
             "Name": [name],
             "Profession": [profession],
@@ -53,6 +54,7 @@ def main():
             "LinkedIn Profile": [linkedin_profile]
         }
 
+        # Generate resume file
         resume_file = generate_resume(resume_data)
         
         st.success("Resume generated successfully!")
