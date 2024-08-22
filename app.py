@@ -57,5 +57,4 @@ for job in resume_data['Experience']:
     for responsibility in job['Responsibilities']:
         st.write(f"- {responsibility}")
 
-# Example usage of SECRET_KEY
-st.write(f"Using secret key: {SECRET_KEY}")
+
