@@ -3,7 +3,6 @@ import streamlit as st
 # Access secret key from Streamlit secrets
 SECRET_KEY = st.secrets.get("SECRET_KEY", "default-secret-key")
 
-
 # Sample resume data with detailed information
 resume_data = {
     "Name": "Irfan Ullah Khan",
@@ -56,7 +55,7 @@ resume_data = {
             "Domain/Category": "Machine Learning, Data Science",
             "Description": (
                 "This model helps patients and doctors diagnose diabetes. "
-                "It predicts based on dataset using various machine learning algorithms. "
+                "It predicts based on a dataset using various machine learning algorithms. "
                 "Includes data pre-processing, training with Neural Networks, and evaluation using metrics such as accuracy, precision, recall, and F1 score."
             ),
             "Skills": ["Machine Learning", "Data Science"],
