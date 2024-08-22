@@ -1,70 +1,88 @@
 import streamlit as st
-import os
-from dotenv import load_dotenv
-import pandas as pd
-from io import BytesIO
+from PIL import Image
+import os  # For environment variable access
 
-# Load environment variables from .env file
-load_dotenv()
+# Define resume data
+resume_data = {
+    "name": "Your Name",
+    "title": "Your Title (e.g., Software Engineer)",
+    "email": "your_email@example.com",
+    "phone": "Your Phone Number",
+    "linkedin": "https://www.linkedin.com/in/your_linkedin_profile",
+    "github": "https://github.com/your_github_username",
+    "skills": ["Python", "Machine Learning", "Data Science", "Deep Learning"],
+    "projects": [
+        {
+            "title": "Project 1",
+            "description": "Brief description of Project 1",
+            "link": "https://github.com/your_repo/project1"
+        },
+        # Add more projects as needed
+    ],
+    "experience": [
+        {
+            "company": "Company Name",
+            "position": "Your Position",
+            "start_date": "Month Year",
+            "end_date": "Month Year (or Present)",
+            "description": "Your experience at the company"
+        },
+        # Add more experience as needed
+    ],
+    "education": [
+        {
+            "degree": "Your Degree",
+            "field": "Your Field of Study",
+            "university": "University Name",
+            "graduation_date": "Month Year"
+        },
+        # Add more education as needed
+    ]
+}
 
-# Access the API key (for demonstration purposes)
-API_KEY = os.getenv("API_KEY")
+def create_resume():
+    st.title("Your Name")
+    st.subheader(resume_data["title"])
 
-def generate_resume(data):
-    # Create a DataFrame for the resume content
-    resume_df = pd.DataFrame(data)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write("**Contact Information:**")
+        st.write(f"Email: {resume_data['email']}")
+        st.write(f"Phone: {resume_data['phone']}")
+        st.write(f"LinkedIn: {resume_data['linkedin']}")
+        st.write(f"GitHub: {resume_data['github']}")
 
-    # Convert DataFrame to Excel
-    buffer = BytesIO()
-    with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-        resume_df.to_excel(writer, index=False, sheet_name='Resume')
-        writer.save()
-    buffer.seek(0)
-    return buffer
+    with col2:
+        st.write("**Skills:**")
+        for skill in resume_data["skills"]:
+            st.write(f"- {skill}")
 
-def main():
-    st.title("Interactive Digital Resume")
+    st.write("**Projects:**")
+    for project in resume_data["projects"]:
+        st.write(f"**{project['title']}**")
+        st.write(project["description"])
+        st.write(f"[Link]({project['link']})")
 
-    st.header("Enter Your Information")
+    st.write("**Experience:**")
+    for exp in resume_data["experience"]:
+        st.write(f"**{exp['company']}** - **{exp['position']}**")
+        st.write(f"{exp['start_date']} - {exp['end_date']}")
+        st.write(exp["description"])
 
-    with st.form("resume_form"):
-        name = st.text_input("Full Name")
-        profession = st.text_input("Profession")
-        key_skills = st.text_area("Key Skills")
-        experiences = st.text_area("Experience (Format: Job Title - Company - Date Range - Achievements)")
-        education = st.text_area("Education (Format: Degree - Institution - Date Range)")
-        skills = st.text_area("Skills (Format: Skill1, Skill2, Skill3)")
-        projects = st.text_area("Projects (Format: Project Title - Description - Technologies Used)")
-        contact_email = st.text_input("Email")
-        linkedin_profile = st.text_input("LinkedIn Profile")
+    st.write("**Education:**")
+    for edu in resume_data["education"]:
+        st.write(f"**{edu['degree']}** in **{edu['field']}** from **{edu['university']}**")
+        st.write(f"Graduated: {edu['graduation_date']}")
 
-        submit_button = st.form_submit_button("Generate Resume")
+# Access API key using environment variable or Streamlit secrets (choose one)
+# Option 1: Using environment variable (recommended)
+# api_key = os.environ.get("MY_API_KEY")
 
-    if submit_button:
-        # Prepare data for the resume
-        resume_data = {
-            "Name": [name],
-            "Profession": [profession],
-            "Key Skills": [key_skills],
-            "Experience": [experiences],
-            "Education": [education],
-            "Skills": [skills],
-            "Projects": [projects],
-            "Contact Email": [contact_email],
-            "LinkedIn Profile": [linkedin_profile]
-        }
+# Option 2: Using Streamlit secrets (alternative)
+ api_key = st.secrets["my_api_key"]  # Uncomment if using Streamlit secrets
 
-        # Generate resume file
-        resume_file = generate_resume(resume_data)
-        
-        st.success("Resume generated successfully!")
-
-        st.download_button(
-            label="Download Resume",
-            data=resume_file,
-            file_name="resume.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
+# Use the API key in your Streamlit app (if needed)
+# ... (Your code using the API key)
 
 if __name__ == "__main__":
-    main()
+    create_resume()
