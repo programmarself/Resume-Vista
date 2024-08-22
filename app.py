@@ -152,4 +152,4 @@ for category, certs in resume_data['Certifications'].items():
 
 # Hobbies and Interests
 st.subheader("Hobbies and Interests")
-st.write(", ".join(resume_data['Hobbies and Interests']))
+st.write(", ".join(resume_data['Hobbies
