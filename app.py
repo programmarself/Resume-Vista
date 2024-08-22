@@ -99,16 +99,90 @@ st.markdown("""
         font-size: 36px;
         font-weight: bold;
         text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
-    .section-title {
+    .subheader {
         color: #4682B4;
         font-size: 24px;
         font-weight: bold;
+        margin-top: 20px;
     }
     .section {
         margin-bottom: 20px;
     }
+    .card {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
     </style>
     """, unsafe_allow_html=True)
 
-st.markdown(f"<div class='title'>{
+st.markdown(f"<div class='title'>{resume_data['Name']}'s Resume</div>", unsafe_allow_html=True)
+
+# Personal Information
+st.markdown("<div class='card'><h2 class='subheader'>Personal Information</h2></div>", unsafe_allow_html=True)
+st.write(f"**Date of Birth:** {resume_data['Date of Birth']}")
+st.write(f"**Nationality:** {resume_data['Nationality']}")
+st.write(f"**Gender:** {resume_data['Gender']}")
+st.write(f"**Phone Number:** {resume_data['Phone Number']}")
+st.write(f"**Email:** [Email]({resume_data['Email']})")
+st.write(f"**Website:** [Website]({resume_data['Website']})")
+st.write(f"**LinkedIn:** [LinkedIn Profile]({resume_data['LinkedIn']})")
+st.write(f"**WhatsApp Messenger:** {resume_data['WhatsApp Messenger']}")
+st.write(f"**Address:** {resume_data['Address']}")
+st.write(f"**Current Focus:** {resume_data['Current Focus']}")
+
+# Education
+st.markdown("<div class='card'><h2 class='subheader'>Education</h2></div>", unsafe_allow_html=True)
+for education in resume_data['Education']:
+    st.write(f"**{education['Degree']}**")
+    st.write(f"**Institution:** {education['Institution']}")
+    st.write(f"**Duration:** {education.get('Duration', 'N/A')}")
+    if 'Website' in education:
+        st.write(f"**Website:** [Institution Website]({education['Website']})")
+    st.write(f"**Location:** {education['Location']}")
+    st.write("---")
+
+# Language Skills
+st.markdown("<div class='card'><h2 class='subheader'>Language Skills</h2></div>", unsafe_allow_html=True)
+for language, skills in resume_data['Languages'].items():
+    if language == "Mother Tongue":
+        st.write(f"**{language}:** {skills}")
+    else:
+        st.write(f"**{language}:**")
+        for skill, level in skills.items():
+            st.write(f"- **{skill}:** {level}")
+
+# Skills
+st.markdown("<div class='card'><h2 class='subheader'>Skills</h2></div>", unsafe_allow_html=True)
+st.write(", ".join(resume_data['Skills']))
+
+# Projects
+st.markdown("<div class='card'><h2 class='subheader'>Projects</h2></div>", unsafe_allow_html=True)
+for project in resume_data['Projects']:
+    st.write(f"**{project['Title']}**")
+    st.write(f"**Domain/Category:** {project['Domain/Category']}")
+    st.write(f"**Description:** {project['Description']}")
+    st.write(f"**Skills:** {', '.join(project['Skills'])}")
+    st.write(f"**Programming Language:** {project['Programming Language']}")
+    st.write(f"**Framework:** {project['Framework']}")
+    st.write("---")
+
+# Certifications
+st.markdown("<div class='card'><h2 class='subheader'>Certifications</h2></div>", unsafe_allow_html=True)
+for category, certs in resume_data['Certifications'].items():
+    st.write(f"**{category}:**")
+    for cert in certs:
+        st.write(f"- {cert}")
+    st.write("---")
+
+# Hobbies and Interests
+st.markdown("<div class='card'><h2 class='subheader'>Hobbies and Interests</h2></div>", unsafe_allow_html=True)
+st.write(", ".join(resume_data['Hobbies and Interests']))
+
+# Add a button to download the resume (optional)
+if st.button('Download Resume'):
+    st.write("Resume downloaded!")
