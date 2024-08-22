@@ -1,7 +1,7 @@
 import streamlit as st
 
-# Secret Key for secure handling (dummy key used here, replace with your actual key)
-SECRET_KEY = st.secrets["SECRET_KEY"]  # Load secret key from Streamlit secrets
+# Access secret key from Streamlit secrets
+SECRET_KEY = st.secrets.get("SECRET_KEY", "default-secret-key")
 
 # Sample resume data
 resume_data = {
@@ -56,3 +56,6 @@ for job in resume_data['Experience']:
     st.write("**Responsibilities:**")
     for responsibility in job['Responsibilities']:
         st.write(f"- {responsibility}")
+
+# Example usage of SECRET_KEY
+st.write(f"Using secret key: {SECRET_KEY}")
