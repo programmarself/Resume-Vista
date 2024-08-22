@@ -1,6 +1,8 @@
 import streamlit as st
 import os
 from dotenv import load_dotenv
+import pandas as pd
+from io import BytesIO
 
 # Load environment variables from .env file
 load_dotenv()
@@ -8,56 +10,59 @@ load_dotenv()
 # Access the API key
 API_KEY = os.getenv("API_KEY")
 
-# Define your resume data
+def generate_resume(data):
+    # Create a DataFrame for the resume content
+    resume_df = pd.DataFrame(data)
+
+    # Convert DataFrame to Excel
+    buffer = BytesIO()
+    with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+        resume_df.to_excel(writer, index=False, sheet_name='Resume')
+        writer.save()
+    buffer.seek(0)
+    return buffer
+
 def main():
-    st.title("Your Name - Digital Resume")
+    st.title("Interactive Digital Resume")
 
-    st.header("About Me")
-    st.write("""
-    Hi! I'm [Your Name], a [Your Profession] with expertise in [Your Key Skills].
-    I have experience working on [Your Key Projects or Areas of Expertise].
-    """)
+    st.header("Enter Your Information")
 
-    st.header("Experience")
-    st.write("**Job Title at Company Name**")
-    st.write("*Date Range*")
-    st.write("""
-    - Key responsibility or achievement
-    - Another responsibility or achievement
-    """)
+    with st.form("resume_form"):
+        name = st.text_input("Full Name")
+        profession = st.text_input("Profession")
+        key_skills = st.text_area("Key Skills")
+        experiences = st.text_area("Experience (Format: Job Title - Company - Date Range - Achievements)")
+        education = st.text_area("Education (Format: Degree - Institution - Date Range)")
+        skills = st.text_area("Skills (Format: Skill1, Skill2, Skill3)")
+        projects = st.text_area("Projects (Format: Project Title - Description - Technologies Used)")
+        contact_email = st.text_input("Email")
+        linkedin_profile = st.text_input("LinkedIn Profile")
 
-    st.write("**Another Job Title at Another Company**")
-    st.write("*Date Range*")
-    st.write("""
-    - Key responsibility or achievement
-    - Another responsibility or achievement
-    """)
+        submit_button = st.form_submit_button("Generate Resume")
 
-    st.header("Education")
-    st.write("**Degree Name**")
-    st.write("Institution Name")
-    st.write("*Date Range*")
+    if submit_button:
+        resume_data = {
+            "Name": [name],
+            "Profession": [profession],
+            "Key Skills": [key_skills],
+            "Experience": [experiences],
+            "Education": [education],
+            "Skills": [skills],
+            "Projects": [projects],
+            "Contact Email": [contact_email],
+            "LinkedIn Profile": [linkedin_profile]
+        }
 
-    st.header("Skills")
-    st.write("""
-    - Skill 1
-    - Skill 2
-    - Skill 3
-    """)
+        resume_file = generate_resume(resume_data)
+        
+        st.success("Resume generated successfully!")
 
-    st.header("Projects")
-    st.write("**Project Title**")
-    st.write("""
-    Description of the project and your role.
-    - Technologies used: Tech1, Tech2
-    """)
-
-    st.header("Contact")
-    st.write("Email: [your.email@example.com](mailto:your.email@example.com)")
-    st.write("LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/yourprofile)")
-
-    # Example usage of API_KEY (for demonstration purposes)
-    st.write(f"API Key: {API_KEY}")
+        st.download_button(
+            label="Download Resume",
+            data=resume_file,
+            file_name="resume.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 
 if __name__ == "__main__":
     main()
