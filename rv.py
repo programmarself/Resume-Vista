@@ -1,79 +1,63 @@
 import streamlit as st
+import os
+from dotenv import load_dotenv
 
-# Load the secret API key from Streamlit's secrets management
-api_key = st.secrets["api_key"]
+# Load environment variables from .env file
+load_dotenv()
 
-# Title of the app
-st.title("Resume Vista")
+# Access the API key
+API_KEY = os.getenv("API_KEY")
 
-# Personal Information
-st.header("Personal Information")
-st.write("**Name:** John Doe")
-st.write("**Email:** john.doe@example.com")
-st.write("**Phone:** (123) 456-7890")
-st.write("**LinkedIn:** [linkedin.com/in/johndoe](https://linkedin.com/in/johndoe)")
-st.write("**GitHub:** [github.com/johndoe](https://github.com/johndoe)")
+# Define your resume data
+def main():
+    st.title("Your Name - Digital Resume")
 
-# About Me Section
-st.header("About Me")
-st.write("""
-I am a passionate software developer with experience in building web applications and 
-working with various technologies. I enjoy problem-solving and learning new things. 
-I thrive in collaborative environments and am always eager to contribute to team success.
-""")
+    st.header("About Me")
+    st.write("""
+    Hi! I'm [Your Name], a [Your Profession] with expertise in [Your Key Skills].
+    I have experience working on [Your Key Projects or Areas of Expertise].
+    """)
 
-# Experience Section
-st.header("Experience")
-st.subheader("Software Developer at Tech Company")
-st.write("""
-**Duration:** January 2020 - Present  
-**Responsibilities:**
-- Developed and maintained web applications using Python and JavaScript.
-- Collaborated with cross-functional teams to design and implement new features.
-- Optimized performance and scalability of applications.
-""")
+    st.header("Experience")
+    st.write("**Job Title at Company Name**")
+    st.write("*Date Range*")
+    st.write("""
+    - Key responsibility or achievement
+    - Another responsibility or achievement
+    """)
 
-st.subheader("Junior Developer at Another Tech Company")
-st.write("""
-**Duration:** June 2018 - December 2019  
-**Responsibilities:**
-- Assisted in the development of web applications and debugging issues.
-- Participated in code reviews and contributed to documentation.
-""")
+    st.write("**Another Job Title at Another Company**")
+    st.write("*Date Range*")
+    st.write("""
+    - Key responsibility or achievement
+    - Another responsibility or achievement
+    """)
 
-# Education Section
-st.header("Education")
-st.subheader("Bachelor of Science in Computer Science")
-st.write("""
-**University Name**  
-**Graduation Year:** 2018  
-**Relevant Coursework:** Data Structures, Algorithms, Web Development, Databases
-""")
+    st.header("Education")
+    st.write("**Degree Name**")
+    st.write("Institution Name")
+    st.write("*Date Range*")
 
-# Skills Section
-st.header("Skills")
-st.write("""
-- **Programming Languages:** Python, JavaScript, HTML, CSS
-- **Frameworks and Libraries:** Django, Flask, React, Node.js
-- **Tools:** Git, Docker, AWS
-- **Soft Skills:** Problem-solving, Communication, Teamwork
-""")
+    st.header("Skills")
+    st.write("""
+    - Skill 1
+    - Skill 2
+    - Skill 3
+    """)
 
-# Projects Section
-st.header("Projects")
-st.subheader("Project One")
-st.write("""
-A brief description of what the project is about, the technologies used, and your role in it.
-""")
+    st.header("Projects")
+    st.write("**Project Title**")
+    st.write("""
+    Description of the project and your role.
+    - Technologies used: Tech1, Tech2
+    """)
 
-st.subheader("Project Two")
-st.write("""
-A brief description of what the project is about, the technologies used, and your role in it.
-""")
+    st.header("Contact")
+    st.write("Email: [your.email@example.com](mailto:your.email@example.com)")
+    st.write("LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/yourprofile)")
 
-# Footer
-st.header("Contact Me")
-st.write("Feel free to reach out via email or LinkedIn!")
+    # Example usage of API_KEY (for demonstration purposes)
+    st.write(f"API Key: {API_KEY}")
 
-# Example usage of the API key (for demonstration purposes)
-st.write(f"API Key (for development purposes): {api_key}")
+if __name__ == "__main__":
+    main()
