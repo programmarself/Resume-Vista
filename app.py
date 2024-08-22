@@ -3,6 +3,7 @@ import streamlit as st
 # Access secret key from Streamlit secrets
 SECRET_KEY = st.secrets.get("SECRET_KEY", "default-secret-key")
 
+
 # Sample resume data with detailed information
 resume_data = {
     "Name": "Irfan Ullah Khan",
